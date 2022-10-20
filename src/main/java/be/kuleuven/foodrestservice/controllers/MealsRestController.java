@@ -54,17 +54,27 @@ public class MealsRestController {
 
     @DeleteMapping("/rest/meals/{id}")
     void deleteMeal(@PathVariable String id){
-        // wat returnen?
         mealsRepository.deleteMeal(id);
     }
 
-    // @PostMapping("/rest/meals")
-    //void addMeal(@PathVariable Meal meal){
-    //}
+    @PostMapping("/rest/meals")
+    String addMeal(@RequestBody Meal meal){
+        try {
+            String id = Integer.toHexString(meal.hashCode());
+            meal.setId(id);
+            mealsRepository.addMeal(meal);
+            return id;
+        }
+        catch(Error e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
 
-    //@PutMapping("/rest/meals/{id}")
-    //void UpdateMeal(@PathVariable Meal meal){
-    //}
+    @PutMapping("/rest/meals/{id}")
+    void updateMeal(@PathVariable String id, @RequestBody Meal meal){
+        mealsRepository.updateMeal(id, meal);
+    }
 
     private EntityModel<Meal> mealToEntityModel(String id, Meal meal) {
         return EntityModel.of(meal,

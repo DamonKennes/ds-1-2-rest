@@ -65,15 +65,14 @@ public class MealsRepository {
         return values.stream().max(Comparator.comparing(Meal::getPrice)).orElseThrow(NoSuchElementException::new);
     }
 
-    public void deleteMeal(String id){
-        meals.remove(id);
+    public void deleteMeal(String id){ meals.remove(id);
     }
 
     public void addMeal(Meal meal){
-        ;
+        meals.put(meal.getId(), meal);
     }
 
-    public void updateMeal(String id){
-        ;
+    public void updateMeal(String id, Meal meal){
+        meals.put(id, meal);
     }
 }
